@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    sender_ip: "127.0.0.1"
+    sender_port: 57410
+    receiver_ip: "127.0.0.1"
+    receiver_port: 57420
