@@ -32,6 +32,18 @@ ament_auto_find_build_dependencies()
 
 find_package(asio_cmake_module REQUIRED)
 find_package(ASIO REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclpy REQUIRED)
+
+
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+# Install Python executables
+install(PROGRAMS
+  scripts/test_publisher.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
   src/udp_socket.cpp
@@ -62,6 +74,19 @@ ament_auto_add_executable(udp_bridge_node_exe
 
 target_link_libraries(udp_bridge_node_exe ${PROJECT_NAME} ${PROJECT_NAME}_nodes)
 ament_target_dependencies(udp_bridge_node_exe ASIO)
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+# Install params files.
+install(DIRECTORY
+  params
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
